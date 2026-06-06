@@ -1,85 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
+
     <nav>
         <a href="/">Home</a>
         <a href="/dashboards">Dashboards</a>
     </nav>
 
     <div class="container">
-    <div class="main-content">
-        
-        <div class="mapa"> 
-            <input type="text" id="id_negocio" name="id_negocio" placeholder="Buscar tienda por ID">
-                <div id="mexico">Mapa de méxico XDD
-                <div class="leyenda">
-                    <h3>Tipos de negocios</h3>
-                    <ul>
-                        <li>
-                            <div id="abarrotes" class="icono"></div>
-                            <span>Abarrotes y bodega</span>
-                        </li>
 
-                        <li>
-                            <div id="farmacia" class="icono"></div>
-                            <span>Farmacia</span>
-                        </li>
+        <div class="main-content">
 
-                        <li>
-                            <div id="hogares" class="icono"></div>
-                            <span>Hogares</span>
-                        </li>
+            <!-- MAPA -->
 
-                        <li>
-                            <div id="kiosco" class="icono"></div>
-                            <span>Kiosco</span>
-                        </li>
-                        <li>
-                            <div id="licoreria" class="icono"></div>
-                            <span>Licoreria</span>
-                        </li>
-                        <li>
-                            <div id="mayorista" class="icono"></div>
-                            <span>Mayorista</span>
-                        </li>
-                        <li>
-                            <div id="minisuper" class="icono"></div>
-                            <span>Minisuper</span>
-                        </li>
-                        <li>
-                            <div id="panaderia" class="icono"></div>
-                            <span>Panaderia</span>
-                        </li>
-                        <li>
-                            <div id="tienda_organica" class="icono"></div>
-                            <span>Tienda orgánica</span>
-                        </li>
-                        <li>
-                            <div id="tienda_carne_pollo_pescado" class="icono"></div>
-                            <span>Tienda de carne/pollo/pescado</span>
-                        </li>
-                        <li>
-                            <div id="verduleria" class="icono"></div>
-                            <span>Verdulería</span>
-                        </li>
-                    </ul>
+            <div class="mapa">
+
+                <div id="mexico">
+
+                    <input
+                        type="text"
+                        id="id_negocio"
+                        name="id_negocio"
+                        placeholder="Buscar tienda por ID"
+                    >
+
+                    <div class="leyenda">
+
+                        <h3>Tipos de negocios</h3>
+
+                        <ul>
+
+                            <li>
+                                <div id="abarrotes" class="icono"></div>
+                                <span>Abarrotes y bodega</span>
+                            </li>
+
+                            <li>
+                                <div id="farmacia" class="icono"></div>
+                                <span>Farmacia</span>
+                            </li>
+
+                            <li>
+                                <div id="hogares" class="icono"></div>
+                                <span>Hogares</span>
+                            </li>
+
+                            <li>
+                                <div id="kiosco" class="icono"></div>
+                                <span>Kiosco</span>
+                            </li>
+
+                            <li>
+                                <div id="licoreria" class="icono"></div>
+                                <span>Licorería</span>
+                            </li>
+
+                            <li>
+                                <div id="mayorista" class="icono"></div>
+                                <span>Mayorista</span>
+                            </li>
+
+                            <li>
+                                <div id="minisuper" class="icono"></div>
+                                <span>Minisuper</span>
+                            </li>
+
+                            <li>
+                                <div id="panaderia" class="icono"></div>
+                                <span>Panadería</span>
+                            </li>
+
+                            <li>
+                                <div id="tienda_organica" class="icono"></div>
+                                <span>Tienda orgánica</span>
+                            </li>
+
+                            <li>
+                                <div id="tienda_carne_pollo_pescado" class="icono"></div>
+                                <span>Tienda de carne/pollo/pescado</span>
+                            </li>
+
+                            <li>
+                                <div id="verduleria" class="icono"></div>
+                                <span>Verdulería</span>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
                 </div>
-                </div>
-        </div>
 
-        <div class="side-content"> 
-            <h3>Dashboards generales</h3>
-            <div class="grafico negocio"> Tipo de negocio </div>
-            <div class="grafico estado"> Ventas x estado </div>
-            <div class="grafico tamaño"> Tamaño de negocio </div>
-            
+            </div>
+
+            <!-- PANEL DERECHO -->
+
+            <div class="side-content">
+
+                <div class="grafico kpi-container">
+
+                    <h4>Clientes en riesgo</h4>
+
+                    <div class="kpi-card">
+
+                        <div class="kpi-numero">
+                            {{ clientes_riesgo }}
+                        </div>
+
+                        <div class="kpi-texto">
+                            Clientes
+                        </div>
+
+                        <div class="kpi-detalle">
+                            ⚠ Requieren atención
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="grafico negocio">
+
+                    <h4>Tipo de negocio</h4>
+
+                    <!-- Aquí irá la gráfica -->
+
+                </div>
+
+                <div class="grafico estado">
+
+                    <h4>Ventas por estado</h4>
+
+                    <!-- Aquí irá la gráfica -->
+
+                </div>
+
+                <div class="grafico tamaño">
+
+                    <h4>Tamaño de negocio</h4>
+
+                    <!-- Aquí irá la gráfica -->
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
-    </div>
+
 </body>
+
+<script>
+
+    const mapa = L.map('mexico').setView([23.6345, -102.5528], 5);
+
+    L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution: '&copy; OpenStreetMap'
+        }
+    ).addTo(mapa);
+
+</script>
+
 </html>

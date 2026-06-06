@@ -1,79 +1,365 @@
-body {
-  width: 100%;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  background: #ffffff !important;
-  color: #000000;
+:root{
+    --primary:#312e81;
+    --primary-light:#4f46e5;
+    --background:#f6f6f6;
+    --card:#ffffff;
+    --text:#111827;
+    --border:#e5e7eb;
+    --shadow:0 4px 20px rgba(0,0,0,.08);
 }
 
+html,
+body{
+    margin:0;
+    padding:0;
+
+    width:100%;
+    height:100vh;
+
+    font-family:'Segoe UI', sans-serif;
+
+    background:var(--background);
+    color:var(--text);
+}
+
+body{
+    display:flex;
+    flex-direction:column;
+}
+
+/* NAVBAR */
+
 nav{
-  width:100%;
-  height: fit-content;
-  align-self: flex-start;
-  background-color: rgb(182, 141, 254);
-  padding: 20px;
-  margin-left: -20px;
+    width:100%;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    padding:18px 30px;
+
+    box-sizing:border-box;
+
+    box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+
+    font-weight:500;
+
+    margin-right:25px;
+
+    transition:.2s;
+}
+
+nav a:hover{
+    opacity:.8;
+}
+
+/* MENSAJE DE ADVERTENCIA */
+
+#advertencia{
+    color:#dc2626;
+
+    font-size:28px;
+    font-weight:700;
+
+    padding:12px 15px;
+
+    background:#fee2e2;
+
+    border-left:6px solid #dc2626;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.container{
+    flex:1;
+    overflow:hidden;
 }
 
 .main-content{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+    height:100%;
+
+    display:flex;
+    gap:20px;
+
+    padding:20px;
+
+    box-sizing:border-box;
 }
+
+/* MAPA */
 
 .mapa{
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    position: relative;
+    width:70%;
 
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    box-shadow:var(--shadow);
 }
-
 
 #mexico{
-  width: 100%;
-  height: 400px;
-  background-color: rgb(153, 181, 212);
-  position: relative;
+    width:100%;
+    height:100%;
+
+    min-height:600px;
+
+    position:relative;
+
+    border-radius:20px;
+
+    overflow:hidden;
 }
 
-#mexico input{
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 1000;
-  background-color: white;
+/* BUSCADOR */
+
+#id_negocio{
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    z-index:1000;
+
+    width:320px;
+
+    padding:14px 18px;
+
+    border:none;
+    border-radius:14px;
+
+    background:white;
+
+    font-size:15px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.12);
 }
 
-.side-content{
-  width: 30%;
-  background-color: rgb(185, 199, 255);
+#id_negocio:focus{
+    outline:none;
+
+    box-shadow:
+        0 0 0 3px rgba(79,70,229,.2),
+        0 4px 15px rgba(0,0,0,.12);
 }
 
-h1 {
-  color: #111827;
-}
-
-p {
-  max-width: 640px;
-  line-height: 1.6;
-}
+/* LEYENDA */
 
 .leyenda{
-  position:absolute;
-  bottom:20px;
-  left:20px;
-  background:white;
-  padding:15px;
-  border-radius:10px;
+    position:absolute;
+
+    bottom:20px;
+    left:20px;
+
+    z-index:1000;
+
+    background:rgba(255,255,255,.95);
+
+    backdrop-filter:blur(8px);
+
+    padding:15px;
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow);
 }
 
-.grafico{
-  background-color: white;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-left: 30px;
-  margin-right: 30px;
-  padding:5px;
+.leyenda h3{
+    margin-top:0;
+    margin-bottom:12px;
+}
 
+.leyenda ul{
+    padding:0;
+    margin:0;
+}
+
+.leyenda li{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    list-style:none;
+
+    margin-bottom:6px;
+}
+
+/* ICONOS */
+
+.icono{
+    width:14px;
+    height:14px;
+
+    min-width:14px;
+
+    border-radius:4px;
+}
+
+/* COLORES DE EJEMPLO */
+
+#abarrotes{
+    background:#3b82f6;
+}
+
+#farmacia{
+    background:#10b981;
+}
+
+#hogares{
+    background:#f59e0b;
+}
+
+#kiosco{
+    background:#ef4444;
+}
+
+#licoreria{
+    background:#8b5cf6;
+}
+
+#mayorista{
+    background:#06b6d4;
+}
+
+#minisuper{
+    background:#84cc16;
+}
+
+#panaderia{
+    background:#f97316;
+}
+
+#tienda_organica{
+    background:#22c55e;
+}
+
+#tienda_carne_pollo_pescado{
+    background:#dc2626;
+}
+
+#verduleria{
+    background:#65a30d;
+}
+
+/* PANEL DERECHO */
+
+.side-content{
+    width:30%;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow-y:auto;
+
+    gap:15px;
+}
+
+.side-content h3{
+    margin:0;
+}
+
+/* TARJETAS */
+
+.grafico{
+    background:var(--card);
+    border-radius:18px;
+
+    padding:15px;
+
+    min-height:220px;
+
+    box-sizing:border-box;
+
+    box-shadow:var(--shadow);
+    
+    transition:.2s;
+}
+
+.grafico:hover{
+    transform:translateY(-2px);
+}
+
+/* TITULOS */
+
+h1{
+    color:var(--text);
+}
+
+/* TEXTO */
+
+p{
+    line-height:1.6;
+}
+
+.kpi-container{
+    min-height:auto;
+}
+
+.kpi-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px 0;
+}
+
+.kpi-numero{
+    font-size:72px;
+    font-weight:700;
+    line-height:1;
+
+    color:#dc2626;
+}
+
+.kpi-texto{
+    margin-top:10px;
+
+    color:#6b7280;
+
+    font-size:13px;
+    font-weight:600;
+
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.kpi-detalle{
+    margin-top:12px;
+
+    background:#fef2f2;
+    color:#dc2626;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+    font-weight:600;
+}
+
+.grafico h4{
+    margin:0 0 15px 0;
+
+    color:#374151;
+
+    font-size:16px;
+    font-weight:600;
 }
