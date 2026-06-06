@@ -5,7 +5,81 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to the Hack4Her Project!</h1>
-    <p>This is the home page of our project. Stay tuned for updates and new features.</p>   
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboards">Dashboards</a>
+    </nav>
+
+    <div class="container">
+    <div class="main-content">
+        
+        <div class="mapa"> 
+            <input type="text" id="id_negocio" name="id_negocio" placeholder="Buscar tienda por ID">
+                <div id="mexico">Mapa de méxico XDD
+                <div class="leyenda">
+                    <h3>Tipos de negocios</h3>
+                    <ul>
+                        <li>
+                            <div id="abarrotes" class="icono"></div>
+                            <span>Abarrotes y bodega</span>
+                        </li>
+
+                        <li>
+                            <div id="farmacia" class="icono"></div>
+                            <span>Farmacia</span>
+                        </li>
+
+                        <li>
+                            <div id="hogares" class="icono"></div>
+                            <span>Hogares</span>
+                        </li>
+
+                        <li>
+                            <div id="kiosco" class="icono"></div>
+                            <span>Kiosco</span>
+                        </li>
+                        <li>
+                            <div id="licoreria" class="icono"></div>
+                            <span>Licoreria</span>
+                        </li>
+                        <li>
+                            <div id="mayorista" class="icono"></div>
+                            <span>Mayorista</span>
+                        </li>
+                        <li>
+                            <div id="minisuper" class="icono"></div>
+                            <span>Minisuper</span>
+                        </li>
+                        <li>
+                            <div id="panaderia" class="icono"></div>
+                            <span>Panaderia</span>
+                        </li>
+                        <li>
+                            <div id="tienda_organica" class="icono"></div>
+                            <span>Tienda orgánica</span>
+                        </li>
+                        <li>
+                            <div id="tienda_carne_pollo_pescado" class="icono"></div>
+                            <span>Tienda de carne/pollo/pescado</span>
+                        </li>
+                        <li>
+                            <div id="verduleria" class="icono"></div>
+                            <span>Verdulería</span>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+        </div>
+
+        <div class="side-content"> 
+            <h3>Dashboards generales</h3>
+            <div class="grafico negocio"> Tipo de negocio </div>
+            <div class="grafico estado"> Ventas x estado </div>
+            <div class="grafico tamaño"> Tamaño de negocio </div>
+            
+        </div>
+
+    </div>
+    </div>
 </body>
 </html>

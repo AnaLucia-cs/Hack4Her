@@ -1,8 +1,27 @@
 import os
-from flask import Flask, jsonify, render_template
+from flask import Flask, request,jsonify, render_template
 from pymongo import MongoClient
 
 app = Flask(__name__, static_folder='static')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+
+@app.context_processor
+def override_url_for():
+  return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+  from flask import url_for
+  if endpoint == 'static':
+    filename = values.get('filename')
+    if filename:
+      path = os.path.join(app.root_path, 'static', filename)
+      try:
+        values['v'] = int(os.path.getmtime(path))
+      except OSError:
+        values['v'] = int(os.path.getmtime(app.root_path))
+  return url_for(endpoint, **values)
 
 mongodb_uri = os.getenv('MONGODB_URI') or os.getenv('MONGODB_ATLAS_URI')
 mongo_client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=3000) if mongodb_uri else None
@@ -15,6 +34,11 @@ def hello():
 @app.route('/')
 def index():
   return render_template("home.html")
+
+@app.route('/dashboards')
+@app.route('/Dashboards')
+def dashboard():
+  return render_template("dashboards.html")
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

@@ -1,8 +1,53 @@
 body {
+  width: 100%;
+  height: 100vh;
   font-family: Arial, sans-serif;
-  margin: 40px;
-  background: #f1e9e9;
-  color: #1f2937;
+  background: #ffffff !important;
+  color: #000000;
+}
+
+nav{
+  width:100%;
+  height: fit-content;
+  align-self: flex-start;
+  background-color: rgb(182, 141, 254);
+  padding: 20px;
+  margin-left: -20px;
+}
+
+.main-content{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.mapa{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    position: relative;
+
+}
+
+
+#mexico{
+  width: 100%;
+  height: 400px;
+  background-color: rgb(153, 181, 212);
+  position: relative;
+}
+
+#mexico input{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  background-color: white;
+}
+
+.side-content{
+  width: 30%;
+  background-color: rgb(185, 199, 255);
 }
 
 h1 {
@@ -12,4 +57,23 @@ h1 {
 p {
   max-width: 640px;
   line-height: 1.6;
+}
+
+.leyenda{
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  background:white;
+  padding:15px;
+  border-radius:10px;
+}
+
+.grafico{
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding:5px;
+
 }
