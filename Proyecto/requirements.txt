@@ -1,2 +1,13 @@
 Flask>=3.1.3
 pymongo>=4.6.3
+
+#descargar flask y activar el entorno virtual
+py -3 -m venv .venv 
+.venv\Scripts\activate
+pip install Flask
+flask --app nombreApp run
+
+#descargar scikit-learn
+pip install -U scikit-learn
+python -m pip show scikit-learn  # show scikit-learn version and location
+
