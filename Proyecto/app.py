@@ -35,7 +35,7 @@ def hello():
 
 @app.route('/')
 def index():
-    clientes_riesgo = 125
+    clientes_riesgo=125
 
     return render_template(
         "home.html",
@@ -45,7 +45,26 @@ def index():
 @app.route('/dashboards')
 @app.route('/Dashboards')
 def dashboard():
-  return render_template("dashboards.html")
+
+    total_clientes=1000
+    clientes_riesgo=125
+    perdida_estimada=300000
+
+    id_cliente = "12345"
+    tipo_negocio = "Restaurante"
+    perdida_aprox = "$10,000"
+    indice_riesgo = "Alto"
+
+    return render_template(
+        "dashboards.html",
+        total_clientes=total_clientes,
+        clientes_riesgo=clientes_riesgo,
+        perdida_estimada=perdida_estimada,
+        id=id_cliente,
+        tipo_negocio=tipo_negocio,
+        perdida_aprox=perdida_aprox,
+        indice_riesgo=indice_riesgo,
+    )
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

@@ -1,18 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesDash.css') }}">
-</head>
-<body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/dashboards">Dashboards</a>
-  </nav>
+<html lang="es">
 
-  <main class="dashboard-wrap">
-    <h1>Dashboards</h1>
-    <p>Aqui van los dashboards, pero no se que poner aqui todavia :D</p>
-  </main>
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Dashboard Clientes</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/stylesDash.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <a href="/">Home</a>
+        <a href="/dashboards">Dashboards</a>
+
+    </nav>
+
+    <div class="container">
+
+        <!-- =====================
+             KPIs
+        ====================== -->
+
+        <div class="kpis">
+
+<div class="kpi-card kpi-info">
+
+    <i class="fa-solid fa-users"></i>
+
+    <h3>Total Clientes</h3>
+
+    <p>{{ total_clientes }}</p>
+
+    <span>CLIENTES</span>
+
+    <div class="kpi-badge">
+        Base activa
+    </div>
+
+</div>
+
+            <div class="kpi-card kpi-success">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+                <h3>Clientes Retenidos</h3>
+
+                <p>{{ clientes_retenidos }}</p>
+
+            </div>
+
+<div class="kpi-card kpi-danger">
+
+    <i class="fa-solid fa-triangle-exclamation"></i>
+
+    <h3>Clientes en Riesgo</h3>
+
+    <p>{{ clientes_riesgo }}</p>
+
+    <span>CLIENTES</span>
+
+    <div class="kpi-badge">
+        ⚠ Requieren atención
+    </div>
+
+</div>
+
+            <div class="kpi-card kpi-warning">
+
+                <i class="fa-solid fa-dollar-sign"></i>
+
+                <h3>Pérdida Estimada</h3>
+
+                <p>${{ perdida_estimada }}</p>
+
+            </div>
+
+        </div>
+
+        <!-- =====================
+             TABLA
+        ====================== -->
+
+        <div class="card">
+
+            <h2>Clientes de Alto Valor en Riesgo</h2>
+
+            <table class="tabla-clientes-riesgo">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Tipo de Negocio</th>
+                        <th>Ingresos Mensuales</th>
+                        <th>% Riesgo</th>
+                        <th>Pérdida Potencial</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <!-- Ejemplo temporal -->
+
+                    <tr>
+
+                        <td>{{ id }}</td>
+
+                        <td>{{ tipo_negocio }}</td>
+
+                        <td>${{ ingresos_mensuales }}</td>
+
+                        <td>
+
+                            <span class="badge danger">
+                                {{ porcentaje_riesgo }}%
+                            </span>
+
+                        </td>
+
+                        <td class="perdida">
+                            ${{ perdida_aprox }}
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- =====================
+             MAPA + TOP RIESGO
+        ====================== -->
+
+        <div class="mapa-row">
+
+            <div class="map-card">
+
+                <h2>Distribución de Clientes en México</h2>
+
+                <div id="mexico_estados"></div>
+
+            </div>
+
+            <div class="card clientes-card">
+
+                <h2>Top Riesgo de Abandono</h2>
+
+                <ol class="lista-riesgo">
+
+                    <li>
+                        <span>Cliente A</span>
+                        <strong>85%</strong>
+                    </li>
+
+                    <li>
+                        <span>Cliente B</span>
+                        <strong>78%</strong>
+                    </li>
+
+                    <li>
+                        <span>Cliente C</span>
+                        <strong>72%</strong>
+                    </li>
+
+                    <li>
+                        <span>Cliente D</span>
+                        <strong>70%</strong>
+                    </li>
+
+                    <li>
+                        <span>Cliente E</span>
+                        <strong>66%</strong>
+                    </li>
+
+                </ol>
+
+            </div>
+
+        </div>
+
+        <!-- =====================
+             FILA INFERIOR
+        ====================== -->
+
+        <div class="row">
+
+            <div class="grafico">
+
+                <h3>Riesgo por Categoría</h3>
+
+                <!-- Gráfico aquí -->
+
+            </div>
+
+            <div class="grafico">
+
+                <h3>Riesgo por Tamaño</h3>
+
+                <!-- Gráfico aquí -->
+
+            </div>
+
+            <div class="card abandono-card">
+
+                <h3>Riesgo General de Abandono</h3>
+
+                <div class="kpi-simple">
+
+                    <div class="circle-danger">
+                        18%
+                    </div>
+
+                    <span>
+                        Clientes susceptibles a abandonar
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================
+         MAPA LEAFLET
+    ====================== -->
+
+    <script>
+
+        const mapa = L.map(
+            'mexico_estados',
+            {
+                scrollWheelZoom: true
+            }
+        ).setView(
+            [23.6345, -102.5528],
+            5
+        );
+
+        L.tileLayer(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '&copy; OpenStreetMap'
+            }
+        ).addTo(mapa);
+
+        window.addEventListener(
+            'load',
+            () => mapa.invalidateSize()
+        );
+
+    </script>
+
 </body>
+
 </html>
