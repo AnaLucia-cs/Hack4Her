@@ -52,7 +52,7 @@ def dashboard():
 
     id_cliente = "12345"
     tipo_negocio = "Restaurante"
-    perdida_aprox = "$10,000"
+    perdida_aprox = 10000
     indice_riesgo = "Alto"
 
     return render_template(
