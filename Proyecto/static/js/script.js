@@ -81,19 +81,11 @@ function randomPointNear(lat, lng, spread = 1.2) {
 // =====================
 
 // ejemplo: cada cliente es UN objeto
-const clientes = [
-    { estado: "Tamaulipas", tipo: "panaderia", riesgo: 0.9 },
-    { estado: "Tamaulipas", tipo: "panaderia", riesgo: 0.9 },
-    { estado: "Tamaulipas", tipo: "panaderia", riesgo: 0.9 },
-    { estado: "Tamaulipas", tipo: "hogares", riesgo: 0.9 },
 
-    { estado: "Nuevo León", tipo: "farmacia", riesgo: 0.6 },
-    { estado: "Jalisco", tipo: "abarrotes", riesgo: 0.4 },
-    { estado: "Puebla", tipo: "kiosco", riesgo: 0.8 },
-    { estado: "Veracruz", tipo: "minisuper", riesgo: 0.7 }
-];
 
-clientes.forEach(c => {
+const altoRiesgo = clientes.filter(c => c.riesgo >= 0.7);
+
+altoRiesgo.forEach(c => {
 
     const base = coordsEstados[c.estado];
     if (!base) return;
@@ -173,3 +165,11 @@ fetch("https://raw.githubusercontent.com/angelnmara/geojson/refs/heads/master/me
     }).addTo(mapa);
 
 });
+
+async function playAudio() {
+    const res = await fetch("/generate-audio");
+    const data = await res.json();
+
+    const audio = new Audio(data.url + "?t=" + Date.now());
+    audio.play();
+}

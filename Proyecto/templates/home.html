@@ -15,6 +15,7 @@
         <a href="/">Home</a>
         <a href="/dashboards">Dashboards</a>
         <a href="/clientes">Clientes</a>
+
     </nav>
 
     <div class="container">
@@ -33,6 +34,8 @@
                         name="id_negocio"
                         placeholder="Buscar tienda por ID"
                     >
+       
+                    <button onclick="playAudio()">Generar audio</button>
 
                     <div class="leyenda">
 
@@ -159,6 +162,13 @@
 
     </div>
 
+    <script>
+        clientes = {{ clientes | tojson }};
+        console.log(clientes);
+    </script>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
 </body>
 </html>

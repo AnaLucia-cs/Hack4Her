@@ -2,6 +2,12 @@ import os
 from flask import Flask, request,jsonify, render_template
 from pymongo import MongoClient
 
+from elevenlabs.client import ElevenLabs
+
+app = Flask(__name__)
+
+elevenlabs = ElevenLabs(api_key="sk_dca29e08e138979ba0f30ceedb0d5e1e02dd10279ee97729")
+
 app = Flask(__name__, static_folder='static')
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
@@ -33,20 +39,37 @@ mongo_db = mongo_client[os.getenv('MONGODB_DB')] if mongo_client and os.getenv('
 def hello():
     return jsonify(message="¡Hola desde Flask!")
 
-@app.route('/')
+@app.route("/")
 def index():
+    clientes = [
+        {"estado": "Tamaulipas", "tipo": "panaderia", "riesgo": 0.9},
+        {"estado": "Nuevo León", "tipo": "farmacia", "riesgo": 0.7},
+        {"estado": "Jalisco", "tipo": "abarrotes", "riesgo": 0.88}
+    ]
+
     clientes_riesgo=125
 
     return render_template(
-        "home.html",
-        clientes_riesgo=clientes_riesgo,
-    )
+	"home.html", 
+	clientes=clientes, 
+    clientes_riesgo=clientes_riesgo,
+	)
+
 
 @app.route('/dashboards')
 @app.route('/Dashboards')
 def dashboard():
 
+    riesgoEstados = {
+        "Nuevo León": 0.85,
+        "Jalisco": 0.62,
+        "Ciudad de México": 0.30,
+        "Puebla": 0.55,
+        "Veracruz": 0.72
+    }
+
     total_clientes=1000
+    clientes_retenidos=500
     clientes_riesgo=125
     perdida_estimada=300000
 
@@ -54,17 +77,23 @@ def dashboard():
     tipo_negocio = "Restaurante"
     perdida_aprox = 10000
     indice_riesgo = "Alto"
+	
+    proporcion="10%"
 
     return render_template(
         "dashboards.html",
+        riesgoEstados=riesgoEstados,
         total_clientes=total_clientes,
+	    clientes_retenidos=clientes_retenidos,
         clientes_riesgo=clientes_riesgo,
         perdida_estimada=perdida_estimada,
         id=id_cliente,
         tipo_negocio=tipo_negocio,
         perdida_aprox=perdida_aprox,
         indice_riesgo=indice_riesgo,
+	    proporcion=proporcion,
     )
+
 
 
 @app.route('/clientes')
@@ -85,6 +114,25 @@ def clientes():
         indice_riesgo=indice_riesgo,
     )
 
+
+@app.route("/generate-audio")
+def generate_audio():
+
+    audio_stream = elevenlabs.text_to_speech.convert(
+        text="Hola, este audio fue generado desde Flask",
+        voice_id="JBFqnCBsd6RMkjVDRZzb"
+    )
+
+    audio = b"".join(audio_stream)
+
+    os.makedirs("static/audio", exist_ok=True)
+
+    path = "static/audio/output.mp3"
+
+    with open(path, "wb") as f:
+        f.write(audio)
+
+    return {"url": "/static/audio/output.mp3"}
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

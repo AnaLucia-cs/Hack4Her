@@ -1,12 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-const riesgoEstados = {
-    "Nuevo León": 0.85,
-    "Jalisco": 0.62,
-    "Ciudad de México": 0.30,
-    "Puebla": 0.55,
-    "Veracruz": 0.72
-};
 
 function getColor(value) {
     return value > 0.8 ? '#b91c1c' :
