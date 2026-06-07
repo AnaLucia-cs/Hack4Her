@@ -94,26 +94,29 @@ def dashboard():
 	    proporcion=proporcion,
     )
 
-
-
 @app.route('/clientes')
-@app.route('/Clientes')
 def clientes():
 
-    
-    id_cliente = "12345"
-    tipo_negocio = "Restaurante"
-    perdida_aprox = 10000
-    indice_riesgo = "Alto"
+    estado = request.args.get("estado")
+
+    clientes = [
+        {"id": "1", "tipo_negocio": "Restaurante", "estado": "Nuevo León", "porcentaje_riesgo": 0.7, "perdida_aprox": 10000},
+        {"id": "2", "tipo_negocio": "Tienda", "estado": "Jalisco", "porcentaje_riesgo": 0.4, "perdida_aprox": 5000},
+        {"id": "3", "tipo_negocio": "Farmacia", "estado": "Nuevo León", "porcentaje_riesgo": 0.9, "perdida_aprox": 20000},
+    ]
+
+    # filtro por estado
+    if estado:
+        clientes = [c for c in clientes if c["estado"] == estado]
+
+    # 🔥 ORDENAR por riesgo (descendente)
+    clientes = sorted(clientes, key=lambda x: x["porcentaje_riesgo"], reverse=True)
 
     return render_template(
         "clientes.html",
-        id=id_cliente,
-        tipo_negocio=tipo_negocio,
-        perdida_aprox=perdida_aprox,
-        indice_riesgo=indice_riesgo,
+        clientes=clientes,
+        estado_seleccionado=estado
     )
-
 
 @app.route("/generate-audio")
 def generate_audio():

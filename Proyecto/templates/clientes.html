@@ -5,18 +5,14 @@
 
     <meta charset="utf-8">
 
-    <title>Dashboard Clientes</title>
+    <title>Clientes</title>
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet/dist/leaflet.css">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/stylesDash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesDash.css') }}">
 
 </head>
 
@@ -27,70 +23,109 @@
         <a href="/">Home</a>
         <a href="/dashboards">Dashboards</a>
         <a href="/clientes">Clientes</a>
+        <button onclick="playAudio()">Generar audio</button>
     </nav>
 
     <div class="container">
-        <!-- =====================
-             TABLA
-        ====================== -->
 
+        <!-- =====================
+             CARD TABLA
+        ====================== -->
         <div class="card">
 
-           <div class="card-header">
-    <h2>Porcentaje de riesgo de los clientes</h2>
+            <!-- HEADER -->
+            <div class="card-header">
 
-    <div class="search-box">
-        <input
-            type="text"
-            id="id_negocio"
-            name="id_negocio"
-            placeholder="Buscar tienda por ID"
-        >
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </div>
-</div>
+                <h2>Customer Churn Probability</h2>
 
+                <form class="form" method="GET" action="/clientes">
+
+    <select name="estado" onchange="this.form.submit()">
+
+        <option value="">Todos los estados</option>
+
+        <option value="Aguascalientes" {% if estado_seleccionado == "Aguascalientes" %}selected{% endif %}>Aguascalientes</option>
+        <option value="Baja California" {% if estado_seleccionado == "Baja California" %}selected{% endif %}>Baja California</option>
+        <option value="Baja California Sur" {% if estado_seleccionado == "Baja California Sur" %}selected{% endif %}>Baja California Sur</option>
+        <option value="Campeche" {% if estado_seleccionado == "Campeche" %}selected{% endif %}>Campeche</option>
+        <option value="Chiapas" {% if estado_seleccionado == "Chiapas" %}selected{% endif %}>Chiapas</option>
+        <option value="Chihuahua" {% if estado_seleccionado == "Chihuahua" %}selected{% endif %}>Chihuahua</option>
+        <option value="Ciudad de México" {% if estado_seleccionado == "Ciudad de México" %}selected{% endif %}>Ciudad de México</option>
+        <option value="Coahuila" {% if estado_seleccionado == "Coahuila" %}selected{% endif %}>Coahuila</option>
+        <option value="Colima" {% if estado_seleccionado == "Colima" %}selected{% endif %}>Colima</option>
+        <option value="Durango" {% if estado_seleccionado == "Durango" %}selected{% endif %}>Durango</option>
+        <option value="Guanajuato" {% if estado_seleccionado == "Guanajuato" %}selected{% endif %}>Guanajuato</option>
+        <option value="Guerrero" {% if estado_seleccionado == "Guerrero" %}selected{% endif %}>Guerrero</option>
+        <option value="Hidalgo" {% if estado_seleccionado == "Hidalgo" %}selected{% endif %}>Hidalgo</option>
+        <option value="Jalisco" {% if estado_seleccionado == "Jalisco" %}selected{% endif %}>Jalisco</option>
+        <option value="Estado de México" {% if estado_seleccionado == "Estado de México" %}selected{% endif %}>Estado de México</option>
+        <option value="Michoacán" {% if estado_seleccionado == "Michoacán" %}selected{% endif %}>Michoacán</option>
+        <option value="Morelos" {% if estado_seleccionado == "Morelos" %}selected{% endif %}>Morelos</option>
+        <option value="Nayarit" {% if estado_seleccionado == "Nayarit" %}selected{% endif %}>Nayarit</option>
+        <option value="Nuevo León" {% if estado_seleccionado == "Nuevo León" %}selected{% endif %}>Nuevo León</option>
+        <option value="Oaxaca" {% if estado_seleccionado == "Oaxaca" %}selected{% endif %}>Oaxaca</option>
+        <option value="Puebla" {% if estado_seleccionado == "Puebla" %}selected{% endif %}>Puebla</option>
+        <option value="Querétaro" {% if estado_seleccionado == "Querétaro" %}selected{% endif %}>Querétaro</option>
+        <option value="Quintana Roo" {% if estado_seleccionado == "Quintana Roo" %}selected{% endif %}>Quintana Roo</option>
+        <option value="San Luis Potosí" {% if estado_seleccionado == "San Luis Potosí" %}selected{% endif %}>San Luis Potosí</option>
+        <option value="Sinaloa" {% if estado_seleccionado == "Sinaloa" %}selected{% endif %}>Sinaloa</option>
+        <option value="Sonora" {% if estado_seleccionado == "Sonora" %}selected{% endif %}>Sonora</option>
+        <option value="Tabasco" {% if estado_seleccionado == "Tabasco" %}selected{% endif %}>Tabasco</option>
+        <option value="Tamaulipas" {% if estado_seleccionado == "Tamaulipas" %}selected{% endif %}>Tamaulipas</option>
+        <option value="Tlaxcala" {% if estado_seleccionado == "Tlaxcala" %}selected{% endif %}>Tlaxcala</option>
+        <option value="Veracruz" {% if estado_seleccionado == "Veracruz" %}selected{% endif %}>Veracruz</option>
+        <option value="Yucatán" {% if estado_seleccionado == "Yucatán" %}selected{% endif %}>Yucatán</option>
+        <option value="Zacatecas" {% if estado_seleccionado == "Zacatecas" %}selected{% endif %}>Zacatecas</option>
+
+    </select>
+
+</form>
+
+
+            </div>
+
+            <!-- TABLA -->
             <table class="tabla-clientes-riesgo">
 
                 <thead>
-
                     <tr>
-
                         <th>ID</th>
                         <th>Tipo de Negocio</th>
-                        <th>Ingresos Mensuales</th>
+                        <th>Estado</th>
                         <th>% Riesgo</th>
                         <th>Pérdida Potencial</th>
-
                     </tr>
-
                 </thead>
 
                 <tbody>
 
-                    <!-- Ejemplo temporal -->
-
+                    {% for c in clientes %}
                     <tr>
+                        <td>{{ c.id }}</td>
 
-                        <td>{{ id }}</td>
+                        <td>{{ c.tipo_negocio }}</td>
 
-                        <td>{{ tipo_negocio }}</td>
+                        <td>{{ c.estado }}</td>
 
-                        <td>${{ ingresos_mensuales }}</td>
-
-                        <td>
-
-                            <span class="badge danger">
-                                {{ porcentaje_riesgo }}%
-                            </span>
-
-                        </td>
+<td>
+    <span class="badge 
+        {% if c.porcentaje_riesgo >= 0.7 %}
+            danger
+        {% elif c.porcentaje_riesgo >= 0.3 %}
+            warning
+        {% else %}
+            success
+        {% endif %}
+    ">
+        {{ (c.porcentaje_riesgo * 100) | round(1) }}%
+    </span>
+</td>
 
                         <td class="perdida">
-                            ${{ perdida_aprox }}
+                            ${{ c.perdida_aprox }}
                         </td>
-
                     </tr>
+                    {% endfor %}
 
                 </tbody>
 
@@ -98,9 +133,9 @@
 
         </div>
 
-        
-
     </div>
+
+    <script src="{{ url_for('static', filename='js/reporte.js') }}"></script>
 
 </body>
 

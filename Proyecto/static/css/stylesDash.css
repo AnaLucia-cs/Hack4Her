@@ -544,3 +544,56 @@ nav a:hover{
     height: 500px;
     width: 100%;
 }
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+/* 🔴 alto riesgo */
+.danger {
+    background-color: #e74c3c;
+}
+
+/* 🟡 medio riesgo */
+.warning {
+    background-color: #f1c40f;
+    color: black;
+}
+
+/* 🟢 bajo riesgo */
+.success {
+    background-color: #2ecc71;
+}
+
+select {
+  width: 250px;              /* ancho del menú */
+  padding: 10px;             /* espacio interno */
+  font-size: 14px;           /* tamaño de letra */
+  border: 1px solid #ccc;    /* borde gris claro */
+  border-radius: 6px;        /* esquinas redondeadas */
+  background-color: #fff;    /* fondo blanco */
+  color: #333;               /* color del texto */
+  appearance: none;          /* quita estilos por defecto */
+  cursor: pointer;           /* cursor tipo mano */
+  transition: all 0.3s ease; /* animación suave */
+}
+
+/* Hover */
+select:hover {
+  border-color: #007bff;     /* borde azul al pasar el mouse */
+}
+
+/* Focus */
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+/* Opciones dentro del menú */
+option {
+  padding: 8px;
+}
