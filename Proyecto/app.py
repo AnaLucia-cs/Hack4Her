@@ -66,6 +66,26 @@ def dashboard():
         indice_riesgo=indice_riesgo,
     )
 
+
+@app.route('/clientes')
+@app.route('/Clientes')
+def clientes():
+
+    
+    id_cliente = "12345"
+    tipo_negocio = "Restaurante"
+    perdida_aprox = 10000
+    indice_riesgo = "Alto"
+
+    return render_template(
+        "clientes.html",
+        id=id_cliente,
+        tipo_negocio=tipo_negocio,
+        perdida_aprox=perdida_aprox,
+        indice_riesgo=indice_riesgo,
+    )
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
 

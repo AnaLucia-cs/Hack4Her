@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Dashboard Clientes</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/stylesDash.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboards">Dashboards</a>
+        <a href="/clientes">Clientes</a>
+    </nav>
+
+    <div class="container">
+        <!-- =====================
+             TABLA
+        ====================== -->
+
+        <div class="card">
+
+           <div class="card-header">
+    <h2>Porcentaje de riesgo de los clientes</h2>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="id_negocio"
+            name="id_negocio"
+            placeholder="Buscar tienda por ID"
+        >
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+</div>
+
+            <table class="tabla-clientes-riesgo">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Tipo de Negocio</th>
+                        <th>Ingresos Mensuales</th>
+                        <th>% Riesgo</th>
+                        <th>Pérdida Potencial</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <!-- Ejemplo temporal -->
+
+                    <tr>
+
+                        <td>{{ id }}</td>
+
+                        <td>{{ tipo_negocio }}</td>
+
+                        <td>${{ ingresos_mensuales }}</td>
+
+                        <td>
+
+                            <span class="badge danger">
+                                {{ porcentaje_riesgo }}%
+                            </span>
+
+                        </td>
+
+                        <td class="perdida">
+                            ${{ perdida_aprox }}
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        
+
+    </div>
+
+</body>
+
+</html>
