@@ -91,55 +91,73 @@
 
         </div>
 
+               
+
         <!-- =====================
              TABLA
         ====================== -->
 
-        <div class="card">
+<div class="card">
 
-            <h2>Clientes de Alto Valor en Riesgo</h2>
+  <div class="card-header">
+    <h2>Clientes de Alto Valor en Riesgo de Churn</h2>
 
+    <form class="form" method="GET" action="/dashboards">
+      <select name="orden" onchange="this.form.submit()">
+        <option value="riesgo"
+          {% if orden == "riesgo" %}selected{% endif %}>
+          Mayor riesgo
+        </option>
+        <option value="perdida"
+          {% if orden == "perdida" %}selected{% endif %}>
+          Mayores pérdidas
+        </option>
+      </select>
+    </form>
+  </div>
+
+ <!-- TABLA -->
             <table class="tabla-clientes-riesgo">
 
                 <thead>
-
                     <tr>
-
                         <th>ID</th>
                         <th>Tipo de Negocio</th>
-                        <th>Ingresos Mensuales</th>
+                        <th>Estado</th>
                         <th>% Riesgo</th>
-                        <th>Pérdida Potencial</th>
-
+                        <th>Ventas perdidas</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
 
-                    <!-- Ejemplo temporal -->
-
+                    {% for c in clientes %}
                     <tr>
+                        <td>{{ c.id }}</td>
 
-                        <td>{{ id }}</td>
+                        <td>{{ c.tipo_negocio }}</td>
 
-                        <td>{{ tipo_negocio }}</td>
+                        <td>{{ c.estado }}</td>
 
-                        <td>${{ ingresos_mensuales }}</td>
-
-                        <td>
-
-                            <span class="badge danger">
-                                {{ porcentaje_riesgo }}%
-                            </span>
-
-                        </td>
+<td>
+    <span class="badge 
+        {% if c.porcentaje_riesgo >= 0.7 %}
+            danger
+        {% elif c.porcentaje_riesgo >= 0.3 %}
+            warning
+        {% else %}
+            success
+        {% endif %}
+    ">
+        {{ (c.porcentaje_riesgo * 100) | round(1) }}%
+    </span>
+</td>
 
                         <td class="perdida">
-                            ${{ perdida_aprox }}
+                            {{ c.perdida_aprox }}
                         </td>
-
                     </tr>
+                    {% endfor %}
 
                 </tbody>
 

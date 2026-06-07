@@ -76,9 +76,22 @@
         <option value="Veracruz" {% if estado_seleccionado == "Veracruz" %}selected{% endif %}>Veracruz</option>
         <option value="Yucatán" {% if estado_seleccionado == "Yucatán" %}selected{% endif %}>Yucatán</option>
         <option value="Zacatecas" {% if estado_seleccionado == "Zacatecas" %}selected{% endif %}>Zacatecas</option>
-
     </select>
 
+    <!-- 🔥 NUEVO: selector de orden -->
+    <select name="orden" onchange="this.form.submit()">
+
+        <option value="riesgo"
+            {% if orden == "riesgo" %}selected{% endif %}>
+            Mayor riesgo
+        </option>
+
+        <option value="perdida"
+            {% if orden == "perdida" %}selected{% endif %}>
+            Mayores pérdidas
+        </option>
+
+    </select>
 </form>
 
 
@@ -93,7 +106,7 @@
                         <th>Tipo de Negocio</th>
                         <th>Estado</th>
                         <th>% Riesgo</th>
-                        <th>Pérdida Potencial</th>
+                        <th>Ventas perdidas</th>
                     </tr>
                 </thead>
 
@@ -122,7 +135,7 @@
 </td>
 
                         <td class="perdida">
-                            ${{ c.perdida_aprox }}
+                            {{ c.perdida_aprox }}
                         </td>
                     </tr>
                     {% endfor %}

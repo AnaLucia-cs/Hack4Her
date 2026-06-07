@@ -39,6 +39,7 @@ mongo_db = mongo_client[os.getenv('MONGODB_DB')] if mongo_client and os.getenv('
 def hello():
     return jsonify(message="¡Hola desde Flask!")
 
+#MAIN PAGE
 @app.route("/")
 def index():
     clientes = [
@@ -55,7 +56,7 @@ def index():
     clientes_riesgo=clientes_riesgo,
 	)
 
-
+#PAGINA DE DASHBOARDS
 @app.route('/dashboards')
 @app.route('/Dashboards')
 def dashboard():
@@ -73,11 +74,20 @@ def dashboard():
     clientes_riesgo=125
     perdida_estimada=300000
 
-    id_cliente = "12345"
-    tipo_negocio = "Restaurante"
-    perdida_aprox = 10000
-    indice_riesgo = "Alto"
-	
+    clientes = [
+        {"id": "1", "tipo_negocio": "Restaurante", "estado": "Nuevo León", "porcentaje_riesgo": 0.9, "perdida_aprox": 2000000},
+        {"id": "2", "tipo_negocio": "Tienda", "estado": "Jalisco", "porcentaje_riesgo": 0.4, "perdida_aprox": 5000000},
+        {"id": "3", "tipo_negocio": "Farmacia", "estado": "Nuevo León", "porcentaje_riesgo": 0.7, "perdida_aprox": 120000000},
+        {"id": "4", "tipo_negocio": "Panaderia", "estado": "Nuevo León", "porcentaje_riesgo": 0.6, "perdida_aprox": 98705000},
+    ]
+    orden = request.args.get("orden", "riesgo")  # default
+
+    # 🔥 orden dinámico
+    if orden == "perdida":
+        clientes = sorted(clientes, key=lambda x: x["perdida_aprox"], reverse=True)
+    else:
+        clientes = sorted(clientes, key=lambda x: x["porcentaje_riesgo"], reverse=True)
+
     proporcion="10%"
 
     return render_template(
@@ -87,37 +97,43 @@ def dashboard():
 	    clientes_retenidos=clientes_retenidos,
         clientes_riesgo=clientes_riesgo,
         perdida_estimada=perdida_estimada,
-        id=id_cliente,
-        tipo_negocio=tipo_negocio,
-        perdida_aprox=perdida_aprox,
-        indice_riesgo=indice_riesgo,
+        clientes=clientes,
 	    proporcion=proporcion,
+        orden=orden
     )
 
+#PAGINA DE CLIENTES
 @app.route('/clientes')
 def clientes():
 
     estado = request.args.get("estado")
+    orden = request.args.get("orden", "riesgo")  # default
 
     clientes = [
-        {"id": "1", "tipo_negocio": "Restaurante", "estado": "Nuevo León", "porcentaje_riesgo": 0.7, "perdida_aprox": 10000},
+        {"id": "1", "tipo_negocio": "Restaurante", "estado": "Nuevo León", "porcentaje_riesgo": 0.9, "perdida_aprox": 20000},
         {"id": "2", "tipo_negocio": "Tienda", "estado": "Jalisco", "porcentaje_riesgo": 0.4, "perdida_aprox": 5000},
-        {"id": "3", "tipo_negocio": "Farmacia", "estado": "Nuevo León", "porcentaje_riesgo": 0.9, "perdida_aprox": 20000},
+        {"id": "3", "tipo_negocio": "Farmacia", "estado": "Nuevo León", "porcentaje_riesgo": 0.7, "perdida_aprox": 12000},
+        {"id": "4", "tipo_negocio": "Panaderia", "estado": "Nuevo León", "porcentaje_riesgo": 0.6, "perdida_aprox": 1000000},
     ]
 
-    # filtro por estado
+    # 🔹 filtro por estado
     if estado:
         clientes = [c for c in clientes if c["estado"] == estado]
 
-    # 🔥 ORDENAR por riesgo (descendente)
-    clientes = sorted(clientes, key=lambda x: x["porcentaje_riesgo"], reverse=True)
+    # 🔥 orden dinámico
+    if orden == "perdida":
+        clientes = sorted(clientes, key=lambda x: x["perdida_aprox"], reverse=True)
+    else:
+        clientes = sorted(clientes, key=lambda x: x["porcentaje_riesgo"], reverse=True)
 
     return render_template(
         "clientes.html",
         clientes=clientes,
-        estado_seleccionado=estado
+        estado_seleccionado=estado,
+        orden=orden
     )
 
+#HACER AUDIO
 @app.route("/generate-audio")
 def generate_audio():
 
