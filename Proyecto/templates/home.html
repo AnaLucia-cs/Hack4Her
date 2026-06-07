@@ -159,19 +159,6 @@
 
     </div>
 
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-
-<script>
-
-    const mapa = L.map('mexico').setView([23.6345, -102.5528], 5);
-
-    L.tileLayer(
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-            attribution: '&copy; OpenStreetMap'
-        }
-    ).addTo(mapa);
-
-</script>
-
 </html>

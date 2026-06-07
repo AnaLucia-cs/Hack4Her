@@ -10,8 +10,6 @@
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet/dist/leaflet.css">
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
@@ -26,7 +24,7 @@
     <nav>
         <a href="/">Home</a>
         <a href="/dashboards">Dashboards</a>
-        <a href="/dashboards">Clientes</a>
+        <a href="/clientes">Clientes</a>
     </nav>
 
     <div class="container">
@@ -157,8 +155,7 @@
 
                 <h2>Distribución de Clientes en México</h2>
 
-                <div id="mexico_estados"></div>
-
+                <div id="mexico"></div>
             </div>
 
             <div class="card clientes-card">
@@ -246,32 +243,10 @@
          MAPA LEAFLET
     ====================== -->
 
-    <script>
 
-        const mapa = L.map(
-            'mexico_estados',
-            {
-                scrollWheelZoom: true
-            }
-        ).setView(
-            [23.6345, -102.5528],
-            5
-        );
-
-        L.tileLayer(
-            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: '&copy; OpenStreetMap'
-            }
-        ).addTo(mapa);
-
-        window.addEventListener(
-            'load',
-            () => mapa.invalidateSize()
-        );
-
-    </script>
 
 </body>
+    <script src="{{ url_for('static', filename='js/heatmap.js') }}"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </html>
